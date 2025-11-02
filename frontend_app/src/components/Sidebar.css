@@ -1,0 +1,59 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px 8px;
+  position: fixed;
+  top: 140px;
+  width: 50px;
+  z-index: 10;
+}
+
+.sidebar.left {
+  left: 8px;
+}
+
+.sidebar.right {
+  right: 8px;
+}
+
+.sidebar-button {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.left .sidebar-button {
+  background: #5b6eff;
+  color: white;
+}
+
+.left .sidebar-button:hover {
+  background: #4755d6;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(91, 110, 255, 0.3);
+}
+
+.right .sidebar-button {
+  background: #5b6eff;
+  color: white;
+}
+
+.right .sidebar-button:hover {
+  background: #4755d6;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(91, 110, 255, 0.3);
+}
+
+.right .sidebar-button.delete {
+  background: #5b6eff;
+  color: white;
+}
