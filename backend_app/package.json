@@ -1,0 +1,32 @@
+{
+  "name": "backend_app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.922.0",
+    "@aws-sdk/client-s3": "^3.922.0",
+    "@aws-sdk/lib-dynamodb": "^3.922.0",
+    "@aws-sdk/s3-request-presigner": "^3.922.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "multer": "^2.0.2",
+    "openai": "^6.7.0",
+    "sharp": "^0.34.4",
+    "sqlite3": "^5.1.7",
+    "uuid": "^13.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}

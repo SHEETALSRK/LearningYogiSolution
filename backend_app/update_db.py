@@ -1,0 +1,86 @@
+import sqlite3
+import json
+
+# Updated JSON with corrected Maths Meeting times on Monday and Thursday (1:15-1:30)
+data = {
+    "class": "2EJ",
+    "term": "Autumn 2 2024",
+    "teacher": "Miss Joynes",
+    "days": {
+        "Monday": [
+            {"time": "8:35-8:50", "subject": "Registration and Early Morning work", "notes": "", "marginLeftPercent": 8.33},
+            {"time": "9:00-9:30", "subject": "RWI", "notes": "", "marginLeftPercent": 14.29},
+            {"time": "9:30-10:00", "subject": "Maths", "notes": "", "marginLeftPercent": 21.43},
+            {"time": "10:00-10:15", "subject": "Assembly", "notes": "", "marginLeftPercent": 28.57},
+            {"time": "10:15-10:35", "subject": "Break", "notes": "", "marginLeftPercent": 32.14},
+            {"time": "10:35-11:00", "subject": "Maths Con", "notes": "", "marginLeftPercent": 36.9},
+            {"time": "11:00-11:55", "subject": "English", "notes": "", "marginLeftPercent": 42.86},
+            {"time": "12:00-1:00", "subject": "Lunch", "notes": "", "marginLeftPercent": 57.14},
+            {"time": "1:00-1:15", "subject": "Handwriting", "notes": "", "marginLeftPercent": 71.43},
+            {"time": "1:15-1:30", "subject": "Maths Meeting", "notes": "", "marginLeftPercent": 75},
+            {"time": "1:30-2:30", "subject": "Science", "notes": "", "marginLeftPercent": 78.57}
+        ],
+        "Tuesday": [
+            {"time": "8:35-8:50", "subject": "Registration and Early Morning work", "notes": "", "marginLeftPercent": 8.33},
+            {"time": "9:00-9:30", "subject": "RWI", "notes": "", "marginLeftPercent": 14.29},
+            {"time": "9:30-10:00", "subject": "Maths", "notes": "", "marginLeftPercent": 21.43},
+            {"time": "10:15-10:35", "subject": "Break", "notes": "", "marginLeftPercent": 32.14},
+            {"time": "10:35-11:35", "subject": "English", "notes": "", "marginLeftPercent": 36.9},
+            {"time": "12:00-1:00", "subject": "Lunch", "notes": "", "marginLeftPercent": 57.14},
+            {"time": "1:00-1:15", "subject": "Handwriting", "notes": "", "marginLeftPercent": 71.43},
+            {"time": "1:15-2:00", "subject": "PSHE", "notes": "Anti Bullying Week", "marginLeftPercent": 75},
+            {"time": "2:00-3:00", "subject": "Computing", "notes": "", "marginLeftPercent": 85.71}
+        ],
+        "Wednesday": [
+            {"time": "8:35-8:50", "subject": "Registration and Early Morning work", "notes": "", "marginLeftPercent": 8.33},
+            {"time": "9:00-9:30", "subject": "RWI", "notes": "", "marginLeftPercent": 14.29},
+            {"time": "9:30-10:00", "subject": "Maths", "notes": "", "marginLeftPercent": 21.43},
+            {"time": "10:00-10:15", "subject": "Assembly", "notes": "", "marginLeftPercent": 28.57},
+            {"time": "10:15-10:35", "subject": "Break", "notes": "", "marginLeftPercent": 32.14},
+            {"time": "10:35-11:00", "subject": "Maths Con", "notes": "", "marginLeftPercent": 36.9},
+            {"time": "11:00-11:55", "subject": "History", "notes": "", "marginLeftPercent": 42.86},
+            {"time": "12:00-1:00", "subject": "Lunch", "notes": "", "marginLeftPercent": 57.14},
+            {"time": "1:00-1:15", "subject": "Handwriting", "notes": "", "marginLeftPercent": 71.43},
+            {"time": "1:15-2:15", "subject": "English", "notes": "", "marginLeftPercent": 75},
+            {"time": "2:15-3:00", "subject": "Music", "notes": "", "marginLeftPercent": 89.29}
+        ],
+        "Thursday": [
+            {"time": "8:35-8:50", "subject": "Registration and Early Morning work", "notes": "", "marginLeftPercent": 8.33},
+            {"time": "9:00-9:30", "subject": "RWI", "notes": "", "marginLeftPercent": 14.29},
+            {"time": "9:30-10:00", "subject": "PE", "notes": "", "marginLeftPercent": 21.43},
+            {"time": "10:00-10:15", "subject": "Singing Assembly", "notes": "", "marginLeftPercent": 28.57},
+            {"time": "10:15-10:35", "subject": "Break", "notes": "", "marginLeftPercent": 32.14},
+            {"time": "11:00-11:55", "subject": "PE", "notes": "", "marginLeftPercent": 42.86},
+            {"time": "12:00-1:00", "subject": "Lunch", "notes": "", "marginLeftPercent": 57.14},
+            {"time": "1:00-1:15", "subject": "Handwriting", "notes": "", "marginLeftPercent": 71.43},
+            {"time": "1:15-1:30", "subject": "Maths Meeting", "notes": "", "marginLeftPercent": 75},
+            {"time": "1:30-2:15", "subject": "English", "notes": "Sentence Stacking 2", "marginLeftPercent": 78.57},
+            {"time": "2:15-3:00", "subject": "Maths", "notes": "practical or TTRS", "marginLeftPercent": 89.29}
+        ],
+        "Friday": [
+            {"time": "8:35-8:50", "subject": "Registration and Early Morning work", "notes": "", "marginLeftPercent": 8.33},
+            {"time": "9:00-9:30", "subject": "Celebration Assembly", "notes": "", "marginLeftPercent": 14.29},
+            {"time": "9:30-10:15", "subject": "RWI", "notes": "", "marginLeftPercent": 21.43},
+            {"time": "10:15-10:35", "subject": "Break", "notes": "", "marginLeftPercent": 32.14},
+            {"time": "10:35-11:25", "subject": "English", "notes": "", "marginLeftPercent": 36.9},
+            {"time": "11:25-12:00", "subject": "RE", "notes": "", "marginLeftPercent": 48.81},
+            {"time": "12:00-1:00", "subject": "Lunch", "notes": "", "marginLeftPercent": 57.14},
+            {"time": "1:00-1:15", "subject": "Handwriting", "notes": "", "marginLeftPercent": 71.43},
+            {"time": "1:15-2:00", "subject": "Maths", "notes": "", "marginLeftPercent": 75},
+            {"time": "2:00-3:00", "subject": "Art", "notes": "", "marginLeftPercent": 85.71}
+        ]
+    }
+}
+
+# Connect to database and update
+conn = sqlite3.connect('timetable.db')
+cursor = conn.cursor()
+
+json_str = json.dumps(data)
+cursor.execute('UPDATE timetables SET timetable_json = ? WHERE id = 2', (json_str,))
+conn.commit()
+
+print(f"Updated record with id=2")
+print(f"Rows affected: {cursor.rowcount}")
+
+conn.close()
